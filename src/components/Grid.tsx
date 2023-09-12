@@ -37,7 +37,13 @@ function Grid(props: GridProps) {
         props.setGrid(updatedGrid)
         props.setOpenedGrids({ opened: props.openedGrids.opened });
         if (updatedGridState[rowIndex][colIndex] == "M") {
-            updatedGridState[rowIndex][colIndex] = "M";
+            for (let i = 0; i < updatedGrid.length; i++) {
+                for (let j = 0; j < updatedGrid[i].length; j++) {
+                    if (updatedGridState[i][j] == "M") {
+                        updatedGrid[i][j] = "M";
+                    }
+                }
+            }
             props.setGameOver(true);
             props.setStarted(false);
             return;
