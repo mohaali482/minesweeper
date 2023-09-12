@@ -82,7 +82,7 @@ function Home() {
     return (
         <>
             <Navbar />
-            <div className="flex flex-col items-center w-full px-10 sm:px-20">
+            <div className="flex flex-col items-center w-full px-2 sm:px-20">
 
                 <div className="flex flex-col items-center w-full">
                     <h1 className="text-3xl font-bold">Welcome to Minesweeper</h1>
@@ -115,7 +115,7 @@ function Home() {
                         <p className="text-small text-default-500">{levelInformation(level.values().next().value as string)}</p>
                     </div>
                 </div>
-                <div className="flex justify-center my-20">
+                <div className="flex justify-center my-20 overflow-x-scroll w-full">
                     {grid.length > 0 && grid[0].length > 0 ?
                         <Grid started={started} setStarted={setStarted} totalMines={totalMines}
                             grid={grid} setGrid={setGrid} gridState={gridState} setGridState={setGridState}

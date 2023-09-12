@@ -115,11 +115,11 @@ function Grid(props: GridProps) {
 
 
     return (
-        <div className="grid gap-1" ref={gridRef}>
+        <div className="grid gap-1 max-w-full" ref={gridRef}>
             {props.grid.map((row, rowIndex) => row.map((col, colIndex) => (
                 <MemoizedGridSquare key={`${rowIndex}-${colIndex}`} value={col}
-                    onClick={useCallback(() => handleClick(rowIndex, colIndex), [props.started, props.gameOver])}
-                    onContextMenu={useCallback((event: React.MouseEvent<HTMLButtonElement>) => handleRightClick(event, rowIndex, colIndex), [props.gameOver])} />
+                    onClick={useCallback(() => handleClick(rowIndex, colIndex), [props.started, props.gameOver, props.openedGrids])}
+                    onContextMenu={useCallback((event: React.MouseEvent<HTMLButtonElement>) => handleRightClick(event, rowIndex, colIndex), [props.gameOver, props.openedGrids])} />
             )))}
         </div>
     )
