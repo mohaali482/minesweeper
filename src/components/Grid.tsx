@@ -39,6 +39,7 @@ function Grid(props: GridProps) {
         if (updatedGridState[rowIndex][colIndex] == "M") {
             updatedGridState[rowIndex][colIndex] = "M";
             props.setGameOver(true);
+            props.setStarted(false);
             return;
         }
         if (!props.started) props.setStarted(true);

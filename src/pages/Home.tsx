@@ -96,7 +96,7 @@ function Home() {
 
                 <div className="flex flex-col w-full sm:flex-row sm:justify-between sm:items-center">
                     <div className="my-4 sm:my-0">
-                        <Time />
+                        <Time running={started} />
                     </div>
                     <div>
                         <Select
@@ -119,7 +119,7 @@ function Home() {
                             grid={grid} setGrid={setGrid} gridState={gridState} setGridState={setGridState}
                             gameOver={gameOver} setGameOver={setGameOver} openedGrids={openedGrids} setOpenedGrids={setOpenedGrids}
                         />
-                        : loading && <p>Loading...</p> || <p>Choose level</p>}
+                        : loading ? <p>Loading...</p> : <p>Choose level</p>}
                 </div>
                 {gameOver && openedModal === "won" && <GameOverWonModal isOpen={openModal} onClose={closeModal} />}
                 {gameOver && openedModal === "lost" && <GameOverLostModal isOpen={openModal} onClose={closeModal} />}

@@ -1,18 +1,21 @@
 import { Card, CardBody } from "@nextui-org/react"
 import { useEffect, useState } from "react"
 
-function Time() {
+interface TimeProps {
+    running: boolean;
+}
+
+function Time(props: TimeProps) {
     const [time, setTime] = useState(0)
-    const [running, setRunning] = useState(false)
 
     useEffect(() => {
         const timer = setInterval(() => {
-            if (running) {
+            if (props.running) {
                 setTime(time => time + 1)
             }
         }, 1000)
         return () => clearInterval(timer)
-    }, [running])
+    }, [props.running])
 
     const formatTime = (time: number) => {
         const minute = Math.floor(time / 60)
