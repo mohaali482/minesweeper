@@ -23,10 +23,12 @@ function Home() {
         const numOfLeftGrids = ((grid.length * grid[0].length) - openedGrids.opened)
         if ((numOfLeftGrids === totalMines)) {
             setGameOver(true);
+            setStarted(false);
             setOpenModal(true);
             setOpenedModal("won");
         } else if (gameOver) {
             setOpenModal(true);
+            setStarted(false);
             setOpenedModal("lost");
         }
     }, [gameOver, openedGrids.opened, totalMines])
