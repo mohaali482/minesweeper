@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useRef, useState } from "react"
+import React, { useCallback, useEffect, useRef } from "react"
 import MemoizedGridSquare from "./GridSquare"
 import DFS from "../utils/algorithm";
 import MineGenerator from "../utils/MineGenerator";
