@@ -64,7 +64,7 @@ function Grid(props: GridProps) {
     useEffect(() => {
         if (gridRef.current)
             gridRef.current.style.gridTemplateColumns = `repeat(${props.grid[0].length}, 1fr)`;
-    }, [])
+    }, [props.grid])
 
 
     return (
