@@ -17,18 +17,18 @@ const Levels = [
     gridSizeY: 30,
     mines: 99,
   },
-  {
-    level: "immortal",
-    gridSizeX: 40,
-    gridSizeY: 30,
-    mines: 240,
-  },
-  {
-    level: "radiant",
-    gridSizeX: 100,
-    gridSizeY: 100,
-    mines: 999,
-  },
+  // {
+  //   level: "immortal",
+  //   gridSizeX: 40,
+  //   gridSizeY: 30,
+  //   mines: 240,
+  // },
+  // {
+  //   level: "radiant",
+  //   gridSizeX: 100,
+  //   gridSizeY: 100,
+  //   mines: 999,
+  // },
 ];
 
 export default Levels;
