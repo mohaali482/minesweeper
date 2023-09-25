@@ -16,6 +16,7 @@ interface GridProps {
     setStarted: React.Dispatch<React.SetStateAction<boolean>>;
     setGameOver: React.Dispatch<React.SetStateAction<boolean>>;
     setOpenedGrids: React.Dispatch<React.SetStateAction<{ opened: number }>>;
+    setMines: React.Dispatch<React.SetStateAction<number>>;
 }
 
 
@@ -62,8 +63,10 @@ function Grid(props: GridProps) {
             const updatedGrid = [...props.grid];
 
             if (updatedGrid[rowIndex][colIndex] == "U") {
+                props.setMines(mines => mines - 1);
                 updatedGrid[rowIndex][colIndex] = "F";
             } else if (updatedGrid[rowIndex][colIndex] == "F") {
+                props.setMines(mines => mines + 1);
                 updatedGrid[rowIndex][colIndex] = "U";
             }
             props.setGrid(updatedGrid);

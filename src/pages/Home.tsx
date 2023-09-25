@@ -17,6 +17,7 @@ function Home() {
     const [gridState, setGridState] = useState<string[][]>([[]])
     const [level, setLevel] = useState<Set<string>>(new Set(["iron"]));
     const [loading, setLoading] = useState(false);
+    const [mines, setMines] = useState(0);
 
 
     useEffect(() => {
@@ -69,6 +70,7 @@ function Home() {
             setGrid([[]]);
             setGridState([[]]);
             setTotalMines(choosenLevel.mines);
+            setMines(choosenLevel.mines)
             setLoading(true);
 
             setGrid(grid);
@@ -104,6 +106,10 @@ function Home() {
                     <div className="my-4 sm:my-0">
                         <Time running={started} />
                     </div>
+                    <div className="flex flex-col justify-center items-center text-lg">
+                        <p>Mines Left: </p>
+                        <p>{mines}</p>
+                    </div>
                     <div>
                         <Select
                             items={Levels}
@@ -126,7 +132,7 @@ function Home() {
                             {
                                 grid.length > 0 && grid[0].length > 0 ?
                                     <Grid started={started} setStarted={setStarted} totalMines={totalMines}
-                                        grid={grid} setGrid={setGrid} gridState={gridState} setGridState={setGridState}
+                                        grid={grid} setGrid={setGrid} gridState={gridState} setGridState={setGridState} setMines={setMines}
                                         gameOver={gameOver} setGameOver={setGameOver} openedGrids={openedGrids} setOpenedGrids={setOpenedGrids}
                                     />
                                     : <></>
