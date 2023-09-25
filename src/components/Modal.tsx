@@ -4,10 +4,11 @@ interface ModalProps {
     title: string;
     body: React.ReactNode[];
     isOpen: boolean;
+    color: "danger" | "success" | "primary" | "default";
     onClose: () => void;
 }
 
-type GameOverModalProps = Omit<ModalProps, "title" | "body">;
+type GameOverModalProps = Omit<ModalProps, "title" | "body" | "color">;
 
 function GenericModal(props: ModalProps) {
     return (
@@ -24,7 +25,7 @@ function GenericModal(props: ModalProps) {
                             {[...props.body]}
                         </ModalBody>
                         <ModalFooter>
-                            <Button color="danger" variant="light" onPress={onClose}>
+                            <Button color={props.color} variant="light" onPress={onClose}>
                                 Close
                             </Button>
                         </ModalFooter>
@@ -42,6 +43,7 @@ export function GameOverLostModal(props: GameOverModalProps) {
             body={[
                 <p key="0">You lost!</p>
             ]}
+            color="danger"
             isOpen={props.isOpen}
             onClose={props.onClose}
         />
@@ -55,6 +57,7 @@ export function GameOverWonModal(props: GameOverModalProps) {
             body={[
                 <p key="0">You won!</p>
             ]}
+            color="success"
             isOpen={props.isOpen}
             onClose={props.onClose}
         />
