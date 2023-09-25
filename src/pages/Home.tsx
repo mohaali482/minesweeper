@@ -3,7 +3,7 @@ import Grid from "../components/Grid"
 import Navbar from "../components/Navbar"
 import Time from "../components/Time"
 import { GameOverLostModal, GameOverWonModal } from "../components/Modal";
-import { Select, SelectItem } from "@nextui-org/react";
+import { ScrollShadow, Select, SelectItem } from "@nextui-org/react";
 import Levels from "../utils/Levels";
 
 function Home() {
@@ -128,7 +128,7 @@ function Home() {
                 {loading ?
                     <p>Loading...</p> :
                     <>
-                        <div className="flex justify-center my-20 overflow-x-scroll w-full">
+                        <ScrollShadow hideScrollBar className="flex justify-center my-20 overflow-x-scroll w-full">
                             {
                                 grid.length > 0 && grid[0].length > 0 ?
                                     <Grid started={started} setStarted={setStarted} totalMines={totalMines}
@@ -137,7 +137,7 @@ function Home() {
                                     />
                                     : <></>
                             }
-                        </div>
+                        </ScrollShadow>
                         {gameOver && openedModal === "won" && <GameOverWonModal isOpen={openModal} onClose={closeModal} />}
                         {gameOver && openedModal === "lost" && <GameOverLostModal isOpen={openModal} onClose={closeModal} />}
                     </>
