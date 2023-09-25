@@ -104,7 +104,7 @@ function Home() {
 
                 <div className="flex flex-col w-full sm:flex-row sm:justify-between sm:items-center">
                     <div className="my-4 sm:my-0">
-                        <Time running={started} />
+                        {!loading && <Time running={started} />}
                     </div>
                     <div className="flex flex-col justify-center items-center text-lg">
                         <p>Mines Left: </p>
