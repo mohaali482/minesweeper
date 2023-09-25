@@ -3,7 +3,7 @@ import Grid from "../components/Grid"
 import Navbar from "../components/Navbar"
 import Time from "../components/Time"
 import { GameOverLostModal, GameOverWonModal } from "../components/Modal";
-import { ScrollShadow, Select, SelectItem } from "@nextui-org/react";
+import { Button, ScrollShadow, Select, SelectItem } from "@nextui-org/react";
 import Levels from "../utils/Levels";
 
 function Home() {
@@ -103,14 +103,14 @@ function Home() {
                 </div>
 
                 <div className="flex flex-col w-full sm:flex-row sm:justify-between sm:items-center">
-                    <div className="my-4 sm:my-0">
+                    <div className="my-4 sm:my-0 sm:w-1/3 sm:flex sm:justify-center">
                         {!loading && <Time running={started} />}
                     </div>
-                    <div className="flex flex-col justify-center items-center text-lg">
+                    <div className="flex flex-col justify-center items-center text-lg sm:w-1/3 my-4">
                         <p>Mines Left: </p>
                         <p>{mines}</p>
                     </div>
-                    <div>
+                    <div className="sm:w-1/3">
                         <Select
                             items={Levels}
                             label="Level"
@@ -127,7 +127,7 @@ function Home() {
                 </div>
                 {loading ?
                     <p>Loading...</p> :
-                    <>
+                    <div className="mb-5 flex flex-col justify-center items-center">
                         <ScrollShadow hideScrollBar className="flex justify-center my-20 overflow-x-scroll w-full">
                             {
                                 grid.length > 0 && grid[0].length > 0 ?
@@ -140,7 +140,8 @@ function Home() {
                         </ScrollShadow>
                         {gameOver && openedModal === "won" && <GameOverWonModal isOpen={openModal} onClose={closeModal} />}
                         {gameOver && openedModal === "lost" && <GameOverLostModal isOpen={openModal} onClose={closeModal} />}
-                    </>
+                        {gameOver && <Button>Restart</Button>}
+                    </div>
                 }
             </div >
         </>
