@@ -51,7 +51,9 @@ function Home() {
     }
 
     const handleSelectionChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-        setLevel(new Set([e.target.value]));
+        if (e.target.value) {
+            setLevel(new Set([e.target.value]));
+        }
     }
 
     useEffect(() => {
@@ -69,15 +71,18 @@ function Home() {
             setTotalMines(choosenLevel.mines);
             setLoading(true);
 
-            setTimeout(() => {
-                setGrid(grid);
-                setGridState(gridState);
-                setLoading(false);
-            }, 1000)
+            setGrid(grid);
+            setGridState(gridState);
         } else {
             alert("Something unexpected happened")
         }
     }, [level])
+
+    useEffect(() => {
+        if (grid.length > 0 && gridState.length > 0) {
+            setLoading(false);
+        }
+    }, [grid, gridState])
 
     return (
         <>
@@ -94,7 +99,6 @@ function Home() {
                         </p>
                     </div>
                 </div>
-
 
                 <div className="flex flex-col w-full sm:flex-row sm:justify-between sm:items-center">
                     <div className="my-4 sm:my-0">
@@ -115,16 +119,23 @@ function Home() {
                         <p className="text-small text-default-500">{levelInformation(level.values().next().value as string)}</p>
                     </div>
                 </div>
-                <div className="flex justify-center my-20 overflow-x-scroll w-full">
-                    {grid.length > 0 && grid[0].length > 0 ?
-                        <Grid started={started} setStarted={setStarted} totalMines={totalMines}
-                            grid={grid} setGrid={setGrid} gridState={gridState} setGridState={setGridState}
-                            gameOver={gameOver} setGameOver={setGameOver} openedGrids={openedGrids} setOpenedGrids={setOpenedGrids}
-                        />
-                        : loading ? <p>Loading...</p> : <p>Choose level</p>}
-                </div>
-                {gameOver && openedModal === "won" && <GameOverWonModal isOpen={openModal} onClose={closeModal} />}
-                {gameOver && openedModal === "lost" && <GameOverLostModal isOpen={openModal} onClose={closeModal} />}
+                {loading ?
+                    <p>Loading...</p> :
+                    <>
+                        <div className="flex justify-center my-20 overflow-x-scroll w-full">
+                            {
+                                grid.length > 0 && grid[0].length > 0 ?
+                                    <Grid started={started} setStarted={setStarted} totalMines={totalMines}
+                                        grid={grid} setGrid={setGrid} gridState={gridState} setGridState={setGridState}
+                                        gameOver={gameOver} setGameOver={setGameOver} openedGrids={openedGrids} setOpenedGrids={setOpenedGrids}
+                                    />
+                                    : <></>
+                            }
+                        </div>
+                        {gameOver && openedModal === "won" && <GameOverWonModal isOpen={openModal} onClose={closeModal} />}
+                        {gameOver && openedModal === "lost" && <GameOverLostModal isOpen={openModal} onClose={closeModal} />}
+                    </>
+                }
             </div >
         </>
     )
