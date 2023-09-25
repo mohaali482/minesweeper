@@ -5,6 +5,7 @@ import Time from "../components/Time"
 import { GameOverLostModal, GameOverWonModal } from "../components/Modal";
 import { Button, ScrollShadow, Select, SelectItem } from "@nextui-org/react";
 import Levels from "../utils/Levels";
+import Footer from "../components/Footer";
 
 function Home() {
     const [started, setStarted] = useState(false);
@@ -144,6 +145,8 @@ function Home() {
                     </div>
                 }
             </div >
+
+            <Footer />
         </>
     )
 }
