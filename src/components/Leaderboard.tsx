@@ -98,7 +98,7 @@ export default function Leaderboard(props: LeaderboardProps) {
                                     <p>{props.newData.level}</p>
                                     <p>{props.newData.time}</p>
                                     <Tooltip color="success" content="Save">
-                                        <Button onClick={handleClick}>
+                                        <Button color="success" onClick={handleClick}>
                                             <SaveIcon />
                                         </Button>
                                     </Tooltip>
