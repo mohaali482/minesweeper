@@ -1,14 +1,16 @@
-import { Button, Navbar as NextUINavbar, NavbarBrand as NextUINavbarBrand, Tooltip } from "@nextui-org/react";
+import { Button, Navbar as NextUINavbar, NavbarBrand as NextUINavbarBrand } from "@nextui-org/react";
 
-function Navbar() {
+interface NavbarProps {
+    onOpen: () => void;
+}
+
+function Navbar(props: NavbarProps) {
     return (
         <NextUINavbar>
             <NextUINavbarBrand>
                 <p className="font-bold text-inherit">Minesweeper</p>
             </NextUINavbarBrand>
-            <Tooltip content="Coming soon...">
-                <Button>Leaderboard</Button>
-            </Tooltip>
+            <Button onPress={props.onOpen}>Leaderboard</Button>
         </NextUINavbar >
     )
 }

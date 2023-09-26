@@ -50,16 +50,3 @@ export function GameOverLostModal(props: GameOverModalProps) {
     )
 }
 
-export function GameOverWonModal(props: GameOverModalProps) {
-    return (
-        <GenericModal
-            title="Game Over"
-            body={[
-                <p key="0">You won!</p>
-            ]}
-            color="success"
-            isOpen={props.isOpen}
-            onClose={props.onClose}
-        />
-    )
-}

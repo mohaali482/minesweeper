@@ -1,13 +1,17 @@
 import { useEffect, useState } from "react";
 import Grid from "../components/Grid"
 import Navbar from "../components/Navbar"
-import Time from "../components/Time"
-import { GameOverLostModal, GameOverWonModal } from "../components/Modal";
-import { Button, ScrollShadow, Select, SelectItem } from "@nextui-org/react";
+import Time, { formatTime } from "../components/Time"
+import { GameOverLostModal } from "../components/Modal";
+import { Button, ScrollShadow, Select, SelectItem, useDisclosure } from "@nextui-org/react";
 import Levels from "../utils/Levels";
 import Footer from "../components/Footer";
+import Leaderboard from "../components/Leaderboard";
 
 function Home() {
+    const { isOpen, onOpen, onOpenChange } = useDisclosure();
+    const [time, setTime] = useState(0);
+    const [saved, setSaved] = useState(false);
     const [started, setStarted] = useState(false);
     const [gameOver, setGameOver] = useState(false);
     const [totalMines, setTotalMines] = useState(2);
@@ -34,6 +38,12 @@ function Home() {
             setOpenedModal("lost");
         }
     }, [gameOver, openedGrids.opened, totalMines])
+
+    useEffect(() => {
+        if (gameOver && openedModal == "won") {
+            onOpen()
+        }
+    }, [gameOver, openedModal])
 
 
 
@@ -89,7 +99,7 @@ function Home() {
 
     return (
         <>
-            <Navbar />
+            <Navbar onOpen={onOpen} />
             <div className="flex flex-col items-center w-full px-2 sm:px-20">
 
                 <div className="flex flex-col items-center w-full">
@@ -105,7 +115,7 @@ function Home() {
 
                 <div className="flex flex-col w-full sm:flex-row sm:justify-between sm:items-center">
                     <div className="my-4 sm:my-0 sm:w-1/3 sm:flex sm:justify-center">
-                        {!loading && <Time running={started} />}
+                        {!loading && <Time time={time} setTime={setTime} running={started} />}
                     </div>
                     <div className="flex flex-col justify-center items-center text-lg sm:w-1/3 my-4">
                         <p>Mines Left: </p>
@@ -139,13 +149,12 @@ function Home() {
                                     : <></>
                             }
                         </ScrollShadow>
-                        {gameOver && openedModal === "won" && <GameOverWonModal isOpen={openModal} onClose={closeModal} />}
                         {gameOver && openedModal === "lost" && <GameOverLostModal isOpen={openModal} onClose={closeModal} />}
                         {gameOver && <Button>Restart</Button>}
                     </div>
                 }
             </div >
-
+            <Leaderboard isOpen={isOpen} onOpenChange={onOpenChange} new={gameOver && !saved} setSaved={setSaved} newData={{ level: level.values().next().value as string, time: formatTime(time) }} />
             <Footer />
         </>
     )

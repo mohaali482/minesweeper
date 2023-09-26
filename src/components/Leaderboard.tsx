@@ -1,0 +1,114 @@
+import { Button, Input, Modal, ModalBody, ModalContent, ModalFooter, ModalHeader, Table, TableBody, TableCell, TableColumn, TableHeader, TableRow, Tooltip } from "@nextui-org/react";
+import React, { useEffect, useState } from "react";
+import DeleteIcon from "./DeleteIcon";
+
+interface LeaderboardItem {
+    name: string;
+    level: string;
+    time: string;
+}
+
+interface LeaderboardProps {
+    isOpen: boolean;
+    new: boolean;
+    newData: Omit<LeaderboardItem, "name"> | null;
+    onOpenChange: () => void;
+    setSaved: React.Dispatch<React.SetStateAction<boolean>>;
+}
+
+export default function Leaderboard(props: LeaderboardProps) {
+    const [leaderboard, setLeaderboard] = useState<LeaderboardItem[]>([]);
+    const [name, setName] = useState("");
+
+    const handleClick = () => {
+        if (props.newData !== null) {
+            const newLeaderboard = [...leaderboard, { ...props.newData, name }]
+            newLeaderboard.sort((a, b) => {
+                if (a.time < b.time) {
+                    return -1
+                } else if (a.time > b.time) {
+                    return 1
+                } else {
+                    return 0
+                }
+            }
+            )
+            setLeaderboard(newLeaderboard)
+            localStorage.setItem("leaderboard", JSON.stringify(newLeaderboard))
+            props.setSaved(true)
+        }
+    }
+
+    const handleDelete = (id: number) => {
+        setLeaderboard(leaderboard => {
+            const newLeaderboard = [...leaderboard].filter((_, index) => index !== id)
+            localStorage.setItem("leaderboard", JSON.stringify(newLeaderboard))
+            return newLeaderboard
+        })
+    }
+
+
+    useEffect(() => {
+        const data = localStorage.getItem("leaderboard")
+        if (data !== null) {
+            setLeaderboard(JSON.parse(data))
+        }
+    }, [])
+
+    return (
+        <Modal isOpen={props.isOpen} onOpenChange={props.onOpenChange}>
+            <ModalContent>
+                {(onClose) => (
+                    <>
+                        <ModalHeader className="flex flex-col gap-1">Leaderboard</ModalHeader>
+                        <ModalBody>
+                            {props.new && props.newData ?
+                                <div className="flex items-center gap-4">
+                                    <Input className="max-w-fit" type="name" label="Name" onChange={(e) => setName(e.target.value)} />
+                                    <p>{props.newData.level}</p>
+                                    <p>{props.newData.time}</p>
+                                    <Button color="success" onClick={handleClick}>Save</Button>
+                                </div> :
+                                <></>
+                            }
+                            <Table
+                                isHeaderSticky
+                                aria-label="Minesweeper Leaderboard"
+                                className="max-h-64 overflow-scroll">
+                                <TableHeader>
+                                    <TableColumn>No.</TableColumn>
+                                    <TableColumn>Name</TableColumn>
+                                    <TableColumn>Level</TableColumn>
+                                    <TableColumn>Time</TableColumn>
+                                    <TableColumn>Action</TableColumn>
+                                </TableHeader>
+                                <TableBody emptyContent={"No rows to display."}>
+                                    {leaderboard.map((item, index) => (
+                                        <TableRow key={index}>
+                                            <TableCell>{index + 1}</TableCell>
+                                            <TableCell>{item.name}</TableCell>
+                                            <TableCell>{item.level}</TableCell>
+                                            <TableCell>{item.time}</TableCell>
+                                            <TableCell>
+                                                <Tooltip color="danger" content="Delete">
+                                                    <span className="text-lg text-danger cursor-pointer active:opacity-50" onClick={() => handleDelete(index)}>
+                                                        <DeleteIcon />
+                                                    </span>
+                                                </Tooltip>
+                                            </TableCell>
+                                        </TableRow>
+                                    ))}
+                                </TableBody>
+                            </Table>
+                        </ModalBody>
+                        <ModalFooter>
+                            <Button color="danger" variant="light" onPress={onClose}>
+                                Close
+                            </Button>
+                        </ModalFooter>
+                    </>
+                )}
+            </ModalContent>
+        </Modal >
+    )
+}

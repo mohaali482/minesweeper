@@ -1,35 +1,37 @@
 import { Card, CardBody } from "@nextui-org/react"
-import { useEffect, useState } from "react"
+import React, { useEffect } from "react"
 
 interface TimeProps {
     running: boolean;
+    time: number;
+
+    setTime: React.Dispatch<React.SetStateAction<number>>;
+}
+
+export function formatTime(time: number) {
+    const minute = Math.floor(time / 60)
+    const strMinute = minute < 10 ? `0${minute}` : `${minute}`
+    const second = time % 60
+    const strSecond = second < 10 ? `0${second}` : `${second}`
+    return `${strMinute}:${strSecond}`
 }
 
 function Time(props: TimeProps) {
-    const [time, setTime] = useState(0)
 
     useEffect(() => {
         const timer = setInterval(() => {
             if (props.running) {
-                setTime(time => time + 1)
+                props.setTime(time => time + 1)
             }
         }, 1000)
         return () => clearInterval(timer)
     }, [props.running])
 
-    const formatTime = (time: number) => {
-        const minute = Math.floor(time / 60)
-        const strMinute = minute < 10 ? `0${minute}` : `${minute}`
-        const second = time % 60
-        const strSecond = second < 10 ? `0${second}` : `${second}`
-        return `${strMinute}:${strSecond}`
-    }
-
     return (
         <Card>
             <CardBody>
                 <p>Time:</p>
-                <p>{formatTime(time)}</p>
+                <p>{formatTime(props.time)}</p>
             </CardBody>
         </Card>
     )
