@@ -1,6 +1,7 @@
-import { Button, Input, Modal, ModalBody, ModalContent, ModalFooter, ModalHeader, Table, TableBody, TableCell, TableColumn, TableHeader, TableRow, Tooltip } from "@nextui-org/react";
-import React, { useEffect, useState } from "react";
+import { Button, Input, Modal, ModalBody, ModalContent, ModalFooter, ModalHeader, Select, SelectItem, Table, TableBody, TableCell, TableColumn, TableHeader, TableRow, Tooltip } from "@nextui-org/react";
+import React, { useEffect, useMemo, useState } from "react";
 import DeleteIcon from "./DeleteIcon";
+import Levels from "../utils/Levels";
 
 interface LeaderboardItem {
     name: string;
@@ -16,9 +17,20 @@ interface LeaderboardProps {
     setSaved: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
+function formatLevel(level: string) {
+    return level.charAt(0).toUpperCase() + level.slice(1)
+}
+
 export default function Leaderboard(props: LeaderboardProps) {
     const [leaderboard, setLeaderboard] = useState<LeaderboardItem[]>([]);
     const [name, setName] = useState("");
+
+    const levels = useMemo(() =>
+        [
+            { id: "all", label: "All" },
+            ...Levels.map((item) => ({ id: item.level, label: item.level.charAt(0).toUpperCase() + item.level.slice(1) })),
+        ], [])
+    const [filter, setFilter] = useState<Set<string>>(new Set([levels[0].id]))
 
     const handleClick = () => {
         if (props.newData !== null) {
@@ -47,13 +59,23 @@ export default function Leaderboard(props: LeaderboardProps) {
         })
     }
 
+    const handleFilterChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+        if (e.target.value) {
+            setFilter(new Set([e.target.value]));
+        }
+    }
 
     useEffect(() => {
         const data = localStorage.getItem("leaderboard")
+        let newLeaderboard: LeaderboardItem[];
         if (data !== null) {
-            setLeaderboard(JSON.parse(data))
+            newLeaderboard = JSON.parse(data);
+            if (filter.values().next().value !== "all") {
+                newLeaderboard = newLeaderboard.filter((value) => value.level === filter.values().next().value)
+            }
+            setLeaderboard(newLeaderboard)
         }
-    }, [])
+    }, [filter])
 
     return (
         <Modal isOpen={props.isOpen} onOpenChange={props.onOpenChange}>
@@ -71,6 +93,22 @@ export default function Leaderboard(props: LeaderboardProps) {
                                 </div> :
                                 <></>
                             }
+                            <div>
+                                <Select
+                                    items={levels}
+                                    label="Filter"
+                                    placeholder="Filter"
+                                    selectedKeys={filter}
+                                    className="sm:max-w-xs"
+                                    onChange={handleFilterChange}
+                                >
+                                    {(level) => (
+                                        <SelectItem key={level.id}>
+                                            {level.label}
+                                        </SelectItem>
+                                    )}
+                                </Select>
+                            </div>
                             <Table
                                 isHeaderSticky
                                 aria-label="Minesweeper Leaderboard"
@@ -87,7 +125,7 @@ export default function Leaderboard(props: LeaderboardProps) {
                                         <TableRow key={index}>
                                             <TableCell>{index + 1}</TableCell>
                                             <TableCell>{item.name}</TableCell>
-                                            <TableCell>{item.level}</TableCell>
+                                            <TableCell>{formatLevel(item.level)}</TableCell>
                                             <TableCell>{item.time}</TableCell>
                                             <TableCell>
                                                 <Tooltip color="danger" content="Delete">
