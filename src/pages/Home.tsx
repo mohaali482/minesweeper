@@ -50,6 +50,9 @@ function Home() {
         setTime(0)
         setSaved(false)
         setLevel(new Set([level.values().next().value]))
+        if (openedModal !== "") {
+            setOpenedModal("")
+        }
     }
 
     const closeModal = () => {
@@ -72,6 +75,9 @@ function Home() {
             setTime(0)
             setSaved(false)
             setLevel(new Set([e.target.value]));
+            if (openedModal !== "") {
+                setOpenedModal("")
+            }
         }
     }
 
