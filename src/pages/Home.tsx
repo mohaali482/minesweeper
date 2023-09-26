@@ -158,7 +158,7 @@ function Home() {
                     </div>
                 }
             </div >
-            <Leaderboard isOpen={isOpen} onOpenChange={onOpenChange} new={gameOver && !saved} setSaved={setSaved} newData={{ level: level.values().next().value as string, time: formatTime(time) }} />
+            <Leaderboard isOpen={isOpen} onOpenChange={onOpenChange} new={gameOver && !saved && openedModal === "won"} setSaved={setSaved} newData={{ level: level.values().next().value as string, time: formatTime(time) }} />
             <Footer />
         </>
     )
