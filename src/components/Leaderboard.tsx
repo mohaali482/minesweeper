@@ -1,6 +1,6 @@
 import { Button, Input, Modal, ModalBody, ModalContent, ModalFooter, ModalHeader, Select, SelectItem, Table, TableBody, TableCell, TableColumn, TableHeader, TableRow, Tooltip } from "@nextui-org/react";
 import React, { useEffect, useMemo, useState } from "react";
-import DeleteIcon from "./DeleteIcon";
+import DeleteIcon from "./icons/DeleteIcon";
 import Levels from "../utils/Levels";
 
 interface LeaderboardItem {
@@ -90,6 +90,7 @@ export default function Leaderboard(props: LeaderboardProps) {
                                     <p>{props.newData.level}</p>
                                     <p>{props.newData.time}</p>
                                     <Button color="success" onClick={handleClick}>Save</Button>
+                                    <Button isIconOnly></Button>
                                 </div> :
                                 <></>
                             }

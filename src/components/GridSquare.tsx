@@ -1,26 +1,7 @@
 import { Button } from "@nextui-org/react"
-import "boxicons"
 import { memo } from "react";
-
-declare global {
-    namespace JSX {
-        interface IntrinsicElements {
-            'box-icon': BoxIconProps;
-        }
-    }
-}
-
-interface BoxIconProps {
-    type?: string;
-    name: string;
-    color?: string;
-    size?: string;
-    rotate?: string;
-    flip?: string;
-    border?: string;
-    animation?: string;
-    pull?: string;
-}
+import FlagIcon from "./icons/FlagIcon";
+import BombIcon from "./icons/BombIcon";
 
 interface GridSquareProps {
     value: string;
@@ -44,7 +25,7 @@ function Square(props: SquareProps) {
 function MineSquare(props: GridSquareProps) {
     return (
         <Square color="danger" onClick={props.onClick} onContextMenu={props.onContextMenu}>
-            <box-icon type="solid" name="bomb" color="white" size="sm"></box-icon>
+            <BombIcon />
         </Square>
     )
 }
@@ -70,7 +51,7 @@ function UnopenedSquare(props: GridSquareProps) {
 function Flag(props: GridSquareProps) {
     return (
         <Square color="warning" onClick={props.onClick} onContextMenu={props.onContextMenu}>
-            <box-icon type="solid" name="flag" color="white" size="sm"></box-icon>
+            <FlagIcon />
         </Square>
     )
 }
