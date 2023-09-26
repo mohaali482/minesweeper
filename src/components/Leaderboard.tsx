@@ -157,7 +157,7 @@ export default function Leaderboard(props: LeaderboardProps) {
                             }
                         </ModalBody>
                         <ModalFooter>
-                            <Button color="danger" variant="light" onPress={onClose}>
+                            <Button color="danger" variant="light" onPress={() => { onClose(); props.setSaved(true); }}>
                                 Close
                             </Button>
                         </ModalFooter>
