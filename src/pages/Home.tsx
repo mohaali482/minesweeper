@@ -48,6 +48,7 @@ function Home() {
 
     const restartGame = () => {
         setTime(0)
+        setSaved(false)
         setLevel(new Set([level.values().next().value]))
     }
 
@@ -68,6 +69,8 @@ function Home() {
 
     const handleSelectionChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
         if (e.target.value) {
+            setTime(0)
+            setSaved(false)
             setLevel(new Set([e.target.value]));
         }
     }
@@ -158,7 +161,7 @@ function Home() {
                     </div>
                 }
             </div >
-            <Leaderboard isOpen={isOpen} onOpenChange={onOpenChange} new={gameOver && !saved && openedModal === "won"} setSaved={setSaved} newData={{ level: level.values().next().value as string, time: formatTime(time) }} />
+            <Leaderboard isOpen={isOpen} onOpenChange={onOpenChange} new={!saved && openedModal === "won"} setSaved={setSaved} newData={{ level: level.values().next().value as string, time: formatTime(time) }} />
             <Footer />
         </>
     )
