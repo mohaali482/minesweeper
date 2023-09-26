@@ -95,7 +95,7 @@ export default function Leaderboard(props: LeaderboardProps) {
                             {props.new && props.newData ?
                                 <div className="flex items-center gap-4">
                                     <Input className="max-w-fit" type="name" label="Name" onChange={(e) => setName(e.target.value)} />
-                                    <p>{props.newData.level}</p>
+                                    <p>{formatLevel(props.newData.level)}</p>
                                     <p>{props.newData.time}</p>
                                     <Tooltip color="success" content="Save">
                                         <Button color="success" onClick={handleClick}>
