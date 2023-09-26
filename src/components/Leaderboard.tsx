@@ -2,6 +2,8 @@ import { Button, Input, Modal, ModalBody, ModalContent, ModalFooter, ModalHeader
 import React, { useEffect, useMemo, useState } from "react";
 import DeleteIcon from "./icons/DeleteIcon";
 import Levels from "../utils/Levels";
+import CancelIcon from "./icons/CancelIcon";
+import SaveIcon from "./icons/SaveIcon";
 
 interface LeaderboardItem {
     name: string;
@@ -51,6 +53,12 @@ export default function Leaderboard(props: LeaderboardProps) {
         }
     }
 
+    const handleCancelClick = () => {
+        if (props.newData !== null) {
+            props.setSaved(true)
+        }
+    }
+
     const handleDelete = (id: number) => {
         setLeaderboard(leaderboard => {
             const newLeaderboard = [...leaderboard].filter((_, index) => index !== id)
@@ -89,8 +97,16 @@ export default function Leaderboard(props: LeaderboardProps) {
                                     <Input className="max-w-fit" type="name" label="Name" onChange={(e) => setName(e.target.value)} />
                                     <p>{props.newData.level}</p>
                                     <p>{props.newData.time}</p>
-                                    <Button color="success" onClick={handleClick}>Save</Button>
-                                    <Button isIconOnly></Button>
+                                    <Tooltip color="success" content="Save">
+                                        <Button onClick={handleClick}>
+                                            <SaveIcon />
+                                        </Button>
+                                    </Tooltip>
+                                    <Tooltip color="danger" content="Cancel">
+                                        <Button color="danger" isIconOnly onClick={handleCancelClick}>
+                                            <CancelIcon />
+                                        </Button>
+                                    </Tooltip>
                                 </div> :
                                 <></>
                             }
