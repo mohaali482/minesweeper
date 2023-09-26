@@ -46,6 +46,10 @@ function Home() {
     }, [gameOver, openedModal])
 
 
+    const restartGame = () => {
+        setTime(0)
+        setLevel(new Set([level.values().next().value]))
+    }
 
     const closeModal = () => {
         if (openModal) {
@@ -150,7 +154,7 @@ function Home() {
                             }
                         </ScrollShadow>
                         {gameOver && openedModal === "lost" && <GameOverLostModal isOpen={openModal} onClose={closeModal} />}
-                        {gameOver && <Button>Restart</Button>}
+                        {gameOver && <Button onClick={restartGame}>Restart</Button>}
                     </div>
                 }
             </div >
