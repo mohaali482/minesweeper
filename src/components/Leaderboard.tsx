@@ -92,24 +92,6 @@ export default function Leaderboard(props: LeaderboardProps) {
                     <>
                         <ModalHeader className="flex flex-col gap-1">Leaderboard</ModalHeader>
                         <ModalBody>
-                            {props.new && props.newData ?
-                                <div className="flex items-center gap-4">
-                                    <Input className="max-w-fit" type="name" label="Name" onChange={(e) => setName(e.target.value)} />
-                                    <p>{formatLevel(props.newData.level)}</p>
-                                    <p>{props.newData.time}</p>
-                                    <Tooltip color="success" content="Save">
-                                        <Button color="success" onClick={handleClick}>
-                                            <SaveIcon />
-                                        </Button>
-                                    </Tooltip>
-                                    <Tooltip color="danger" content="Cancel">
-                                        <Button color="danger" isIconOnly onClick={handleCancelClick}>
-                                            <CancelIcon />
-                                        </Button>
-                                    </Tooltip>
-                                </div> :
-                                <></>
-                            }
                             <div>
                                 <Select
                                     items={levels}
@@ -155,6 +137,24 @@ export default function Leaderboard(props: LeaderboardProps) {
                                     ))}
                                 </TableBody>
                             </Table>
+                            {props.new && props.newData ?
+                                <div className="flex items-center gap-4">
+                                    <Input className="max-w-fit" type="name" label="Name" onChange={(e) => setName(e.target.value)} />
+                                    <p>{formatLevel(props.newData.level)}</p>
+                                    <p>{props.newData.time}</p>
+                                    <Tooltip color="success" content="Save">
+                                        <Button color="success" onClick={handleClick}>
+                                            <SaveIcon />
+                                        </Button>
+                                    </Tooltip>
+                                    <Tooltip color="danger" content="Cancel">
+                                        <Button color="danger" isIconOnly onClick={handleCancelClick}>
+                                            <CancelIcon />
+                                        </Button>
+                                    </Tooltip>
+                                </div> :
+                                <></>
+                            }
                         </ModalBody>
                         <ModalFooter>
                             <Button color="danger" variant="light" onPress={onClose}>
