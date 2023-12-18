@@ -1,17 +1,11 @@
 {
   "headers": [
     {
-      "source": "/",
-      "has": [
-        {
-          "type": "host",
-          "value": "mohaali482-minesweeper.vercel.app"
-        }
-      ],
+      "source": "/(.*)",
       "headers": [
         {
-          "key": "X-Robots-Tag",
-          "value": "noindex"
+          "key": "x-robots-tag",
+          "value": "index, follow"
         }
       ]
     }

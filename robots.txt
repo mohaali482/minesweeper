@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://mohaali482-minesweeper.vercel.app/sitemap.xml
